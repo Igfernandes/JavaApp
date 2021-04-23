@@ -1,0 +1,122 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sistema;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Ferna
+ */
+public class Banconew {
+    
+    public static class ContaBancaria{
+        public String nome;
+        public int agencia;
+        public int conta;
+        public float saldo;
+        
+        public float sacar(float saque, float saldo){
+            float saldoAtt = saldo - saque; 
+           return saldoAtt;
+        }
+        public float transferir(float transfer, float saldoUser, float saldoDest){
+           float saldoDestAtt = saldoDest + transfer;
+           return saldoDestAtt;
+        }
+    }
+    
+    
+   public static void main(String[] args){
+       Scanner read = new Scanner(System.in);
+       
+       System.out.print("Deseja registrar quantos clientes? ");
+       int qtd = read.nextInt();
+       
+       ContaBancaria cliente[] = new ContaBancaria[qtd];
+       
+       for(int x = 0; x < qtd; x++){
+            cliente[x] = new ContaBancaria();
+            System.out.printf("\n Cliente %d \n", x);
+            System.out.print("Nome do Cliente: ");
+            cliente[x].nome = read.next();
+            System.out.print("AgÃªncia do Cliente: ");
+            cliente[x].agencia = read.nextInt();
+            System.out.print("Conta do Cliente: ");
+            cliente[x].conta = read.nextInt();
+            System.out.print("Saldo do Cliente: ");
+            cliente[x].saldo = read.nextFloat();
+       }
+       
+       //UsuÃ¡rio Logado
+       ContaBancaria usuario = new ContaBancaria();
+       boolean conect = false;
+       boolean session = true;
+       int escolha;
+       
+       
+            System.out.println("\n\n\nOlÃ¡! Bem vindo ao nosso NewBank! \n\n| FaÃ§a o seu login |: \n");
+            System.out.print("($) - Informe o seu Nome: ");
+            usuario.nome = read.next();
+            System.out.print("($) - Informe a sua AgÃªncia: ");
+            usuario.agencia = read.nextInt();
+            System.out.print("($) - Informe a sua Conta: ");
+            usuario.conta = read.nextInt();
+            for(int x = 0; x < qtd; x++){
+                if(usuario.nome.equals(cliente[x].nome) && usuario.agencia == cliente[x].agencia && usuario.conta == cliente[x].conta){
+                    System.out.printf("\n\n\n Bem Vindo Senhor %s", usuario.nome);
+                    usuario.saldo = cliente[x].saldo;
+                    conect = true;
+                }else if(conect == false){
+                    System.out.println("\n Carregando...");
+                }
+            }
+            while(session == true){
+             if(conect == true){
+               System.out.printf("\n\n Qual operaÃ§Ã£o o senhor deseja fazer? \n");
+            }else{
+                System.out.print("\n\n Desculpe, mas nÃ£o encontramos o seu cadastro. Entre em contato com o banco!");
+                session = false;
+                break;
+            }
+            
+            System.out.println("(1) - Sacar");
+            System.out.println("(2) - Transferir");
+            System.out.println("($) - Sair");
+            int resp = read.nextInt();
+            switch(resp){
+                case 1:
+                    System.out.printf("\nDigite Quando deseja sacar: (Saldo Atual: %.2f) -(", usuario.saldo);
+                    float saque = read.nextFloat();
+                    usuario.saldo = usuario.sacar(saque, usuario.saldo);
+                    System.out.printf("\nVoce Sacou: %.2f. Seu saldo atual Ã© %.2f",saque,usuario.saldo);
+                    break;
+                case 2:
+                    System.out.printf("\n\n Digite Quanto deseja transferir: (Saldo Atual: %.2f) -(", usuario.saldo);
+                    float transfer = read.nextFloat();
+                    System.out.println("Qual a agÃªncia do remetente?");
+                    int agencia = read.nextInt();
+                    System.out.println("Qual Ã© o nÃºmero da conta?");
+                    int conta = read.nextInt();
+                    for(int x = 0; x < qtd; x++){
+                        if(cliente[x].agencia == agencia && cliente[x].conta == conta){
+                           cliente[x].saldo = usuario.transferir(transfer, usuario.saldo, cliente[x].saldo);
+                           usuario.saldo -= transfer; 
+                           System.out.println("\n| Obrigado por usar os nossos serviÃ§os! |");
+                           System.out.printf("($) - VocÃª trasnferiu: %.2f \n", transfer);
+                           System.out.printf("($) - O seu saldo atual Ã©: %.2f \n", usuario.saldo);
+                           System.out.printf("($) - O saldo do remetente Ã©: %.2f \n", cliente[x].saldo);
+                        }
+                    }
+                    break;
+                default:
+                    session = false;
+                    System.out.print("Obrigado por escolher os nossos serviÃ§os! \n Volte Sempre.");
+                    break;
+            }
+             
+        }
+    }
+}
