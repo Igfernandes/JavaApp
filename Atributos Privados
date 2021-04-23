@@ -1,0 +1,88 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package estacio;
+
+import java.util.Scanner;
+import java.util.Calendar; 
+
+/**
+ *
+ * @author Ferna
+ */
+public class Estacio {
+
+    public static class Pessoas{
+        private String nome;
+        private int data_nasc;
+        private float peso;
+        private String escolaridade;
+ 
+        //CAMPOS DO TIPO STRING
+        public String getfieldStr(String resp){
+            String result = "null";
+            if(resp == "nome"){
+                result = nome;
+            }else if(resp == "escolaridade"){
+                result = escolaridade;
+            }
+            return result;
+        }
+        public void setfieldStr(String resp, String value){
+            if(resp == "nome"){
+                this.nome = value;
+            }else if(resp == "escolaridade"){
+                this.escolaridade = value;
+            }
+        }
+        
+        // CAMPOS DO TIPO INTEIRO
+        public int getfieldInt(){
+            return data_nasc;
+        }
+        public void setfieldInt(int data){
+            this.data_nasc = data;
+        }
+        
+         // CAMPOS DO TIPO FLOAT
+        public float getfieldFloat(){
+            return peso;
+        }
+        public void setfieldFloat(float peso){
+            this.peso = peso;
+        }
+        
+ 
+    }
+
+    public static void main(String[] args) {
+        Scanner read = new Scanner(System.in);
+       
+        System.out.println("| PRIVACIDADE E POLIFORMISMO |");
+        System.out.println("(@) - Vamos testar a lógica do programa? Preencha as informações de três pessoas;");
+        
+        Pessoas cadastro[] = new Pessoas[3];
+        
+        for(int x=0; x < 3; x++){
+            cadastro[x] = new Pessoas();
+            System.out.printf("(%d°) - Informe o nome:", (x+1));
+            cadastro[x].setfieldStr("nome", read.next());
+            System.out.printf("(%d°) - Informe o ano de nascimento:", (x+1));
+            cadastro[x].setfieldInt(read.nextInt());
+            System.out.printf("(%d°) - Informe o peso:", (x+1));
+            cadastro[x].setfieldFloat(read.nextFloat());
+            System.out.printf("(%d°) - Informe a escolaridade:", (x+1));
+            cadastro[x].setfieldStr("escolaridade", read.next());
+            System.out.printf("\n (%d°) - O nome é %s, tem %d anos, pesa %.2f kg e tem %s \n\n", x, cadastro[x].getfieldStr("nome"), calc_Nasc(cadastro[x].getfieldInt()), cadastro[x].getfieldFloat(), cadastro[x].getfieldStr("escolaridade"));
+        }
+    }
+    
+    
+    public static int calc_Nasc(int nasc){
+        Calendar ano = Calendar.getInstance();
+        int data_nasc = ano.get(Calendar.YEAR) - nasc;
+        return data_nasc;
+    }
+}
