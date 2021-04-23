@@ -42,7 +42,7 @@ public class Banconew {
             System.out.printf("\n Cliente %d \n", x);
             System.out.print("Nome do Cliente: ");
             cliente[x].nome = read.next();
-            System.out.print("AgÃªncia do Cliente: ");
+            System.out.print("Agência do Cliente: ");
             cliente[x].agencia = read.nextInt();
             System.out.print("Conta do Cliente: ");
             cliente[x].conta = read.nextInt();
@@ -60,7 +60,7 @@ public class Banconew {
             System.out.println("\n\n\nOlÃ¡! Bem vindo ao nosso NewBank! \n\n| FaÃ§a o seu login |: \n");
             System.out.print("($) - Informe o seu Nome: ");
             usuario.nome = read.next();
-            System.out.print("($) - Informe a sua AgÃªncia: ");
+            System.out.print("($) - Informe a sua Agência: ");
             usuario.agencia = read.nextInt();
             System.out.print("($) - Informe a sua Conta: ");
             usuario.conta = read.nextInt();
