@@ -1,0 +1,113 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package estacio;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Ferna
+ */
+public class Estacio {
+
+    public static class Pessoas {
+        public String nome;
+        public int idade;
+        public float peso;
+        public int passos;
+        public int hrDescanso;
+
+        public int andar(int mts, int passos) {
+            int andou = passos + (mts * 10);
+            return andou;
+        }
+
+        public int dormir(int mnts, int descanso) {
+            int dormido = descanso + (mnts * 30);
+            return dormido;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner read = new Scanner(System.in);
+        boolean session = true; boolean subsession = true;
+        
+        System.out.println("| BEM VINDO AO FAMILYCOUNT |");
+        System.out.println("(*) - Vamos registrar seus humanos? Ops! Familiares =)");
+        System.out.print("(*) - Quantos são? ");
+        int qtd = read.nextInt();
+        
+        Pessoas registro[] = new Pessoas[qtd];
+        
+        for(int x=0; x < qtd; x++){
+            registro[x] = new Pessoas();
+            System.out.printf("\n\n Registro %d \n", x);
+            System.out.print("(*) - Diga o nome da pessoa: ");
+            registro[x].nome = read.next();
+            System.out.print("(*) - Diga a idade da pessoa: ");
+            registro[x].idade = read.nextInt();
+            System.out.print("(*) - Diga o peso da pessoa: ");
+            registro[x].peso = read.nextFloat();
+            System.out.print("\n\n | Pessoa registrada com sucesso |");
+        }
+        
+        System.out.println(" \n \n(*) - Selecione a pessoa e faça ela dormir ou andar a quantidade que quiser.");
+        System.out.println("(*) - Especifique apenas os pontos. O mínimo é 1 ponto, que equivale a 10 metro ou 30 minutos dormindo; ");
+        System.out.println("(*) - A cada 1 ponto que é adicionado em passos ou dormir, é retirado do outro.");
+        
+        while(session == true){
+            System.out.println("\n Escolha a pessoa que deseja executar algum comando pelo nome: ");
+            for(int x =0; x < qtd; x++){
+                System.out.printf("\n (*) - %s", registro[x].nome);
+            }
+            System.out.print("\n (*) - Sair");
+            System.out.print("\n -( ");
+            String resp = read.next();
+            if(resp != "sair"){
+                for(int x =0; x < qtd; x++){
+                    if(resp.equals(registro[x].nome)){
+                        while(subsession == true){
+                            System.out.print("\n\n (*) - O que deseja que a pessoa faça?");
+                            System.out.print("\n (1) - Ande? ");
+                            System.out.println("\n (2) - Durma? ");
+                            System.out.println("\n (3) - Voltar ");
+                            System.out.print("\n -( ");
+                            int esc = read.nextInt();
+
+                            switch(esc){
+                                case 1: 
+                                    System.out.print("(*) - Deseje que ande quantos passos?");
+                                    esc = read.nextInt();
+                                    if(registro[x].hrDescanso != 0){
+                                        registro[x].hrDescanso -= esc;
+                                    }
+                                    registro[x].passos = registro[x].andar(esc, registro[x].passos);
+                                    System.out.printf(" \n(*) Agora %s tem %d horas dormidas e %d metros andados \n", registro[x].nome, registro[x].hrDescanso, registro[x].passos);
+                                    break;
+                                case 2:
+                                    System.out.print("(*) - Deseje que durma quanto tempo?");
+                                    esc = read.nextInt();
+                                    if(registro[x].passos != 0){
+                                        registro[x].passos -= (esc * 10);
+                                    }
+                                    registro[x].hrDescanso = registro[x].dormir(esc, registro[x].hrDescanso);
+                                    System.out.printf("\n (*) Agora %s tem %d minutos dormidos e %d metros andados \n", registro[x].nome, registro[x].hrDescanso, registro[x].passos);
+                                    break;
+                                default:
+                                    subsession = false;
+                                    System.out.println(" | Voltando ... |");
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }else{
+                session = false;
+                System.out.println("\n\n | Obrigado e volte sempre!! |");
+            }
+        }
+    }
+}
