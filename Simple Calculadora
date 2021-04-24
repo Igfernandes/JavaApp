@@ -1,0 +1,98 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package estacio;
+
+import java.util.Scanner;
+import java.util.Calendar; 
+
+/**
+ *
+ * @author Ferna
+ */
+public class Estacio {
+
+    public abstract class OperacaoMatematica{
+        public int soma(int x, int y){
+            return x + y;
+        }
+        public int substracao(int x, int y){
+            return x - y;
+        }
+        public int multiplicacao(int x, int y){
+            return x * y;
+        }
+        public float divisao(float x, float y){
+            return x / y;
+        }
+    }
+    
+    public static class Soma extends OperacaoMatematica{
+        public int soma(int x, int y){
+            return x + y;
+        } 
+    }
+    public static class Subtracao extends OperacaoMatematica{
+        public int substracao(int x, int y){
+            return x - y;
+        }
+    }
+    public static class Multiplicacao extends OperacaoMatematica{
+        public int multiplicacao(int x, int y){
+            return x * y;
+        }
+    }
+    public static class Divisao extends OperacaoMatematica{
+         public float divisao(float x, float y){
+            return x / y;
+        }
+    }
+    public static void main(String[]args){
+        Scanner read = new Scanner(System.in);
+        
+         System.out.println("| CALCULADORA |*");
+         System.out.print("(*) - Selecione a operação: ");
+         int resp = read.nextInt();
+         
+         switch(resp){
+            case 1: 
+                Soma calc_sm = new Soma();
+                System.out.println("Diga dois números.");
+                int nu1 = read.nextInt();
+                int nu2 = read.nextInt();
+                System.out.printf("O resultado é %f", calc_sm.soma(nu1, nu2));
+                break;
+            case 2: 
+                Subtracao calc_sub = new Subtracao();
+                System.out.println("Diga dois números.");
+                nu1 = read.nextInt();
+                nu2 = read.nextInt();
+                if( nu1 == 0 || nu2 == 0){
+                    System.out.print("\n Informe valores acima de zero;");
+                }else{
+                    System.out.printf("O resultado é %f", calc_sub.substracao(nu1, nu2) );
+                }
+            case 3: 
+                Multiplicacao calc_multipli = new Multiplicacao();
+                System.out.println("Diga dois números.");
+                nu1 = read.nextInt();
+                nu2 = read.nextInt();
+                System.out.printf("O resultado é %f", calc_multipli.multiplicacao(nu1, nu2) );
+            case 4: 
+                Divisao calc_div = new Divisao();
+                System.out.println("Diga dois números.");
+                nu1 = read.nextInt();
+                nu2 = read.nextInt();
+                if( nu1 == 0 || nu2 == 0){
+                    System.out.print("\n Informe valores acima de zero;");
+                }else{
+                    System.out.printf("O resultado é %f", calc_div.divisao(nu1, nu2)  );
+                }    
+         }
+    }
+    
+    
+ 
+}
